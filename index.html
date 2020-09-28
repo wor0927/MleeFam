@@ -1,0 +1,241 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<!-- jquery를 불러옵니다. jquery.com download 페이지를 참조해주세요 -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<!-- 구글폰트주소 -->
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+<title>window left menu test</title>
+</head>
+<style>
+/*------------------ 셋팅값 ------------------*/
+@import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap');
+* { padding:0; margin:0;}
+a { text-decoration:none;}
+ul,ol,li {list-style:none;}
+
+/*------------------ header(S) ------------------*/
+header { position:fixed;}
+
+/*------------------ .menu(S) ------------------*/
+.menu {
+   position:relative;
+   top:100px;
+   left:-130px;
+   width:130px;
+   height:500px;
+   background:rgba(70,70,252,.6);
+   transition:0.5s;
+   border-radius: 0 1000px 1000px 0;
+}
+.menu::after {
+   content:"*";
+   position:absolute;
+   width: 50px;
+   height: 500px;
+   top:0px;
+   left:130px;
+   _background-color:beige;
+   -webkit-cursor:pointer;
+   -ms-cursor:pointer;
+   cursor:pointer;
+ 
+   color : red;
+   font-weight:bold;
+   line-height:30;
+   text-align:center;
+}
+
+.pop {
+   animation-duration: .4s;
+   animation-name: slidein; 
+   animation-iteration-count: infinite;
+}
+@keyframes slidein {
+   from {
+	top:110px;
+  }
+
+  to {
+   top:98px;
+  }
+}
+.menu ul { 
+   width:100%;
+   height:50px;
+   padding-top: 150px;
+}
+.menu ul li { padding : 5px 0 20px 5px; }
+.menu ul li a { 
+   font-size : 18px; 
+   text-shadow: 2px 2px 2px red;
+   font-weight : bold; 
+   transition:.3s;
+   font-family: 'Alfa Slab One', cursive;
+   letter-spacing:0.08;
+   color:yellow;
+}
+.menu ul li a:hover {
+   color:red; 
+   text-shadow: 2px 2px 2px yellow;
+   padding-left:7px;
+   transition:.3s;
+}
+
+/*------------------ .H_box(S) ------------------*/
+.H_box {
+   position:fixed;
+   right:0;
+   width: 20px;
+   height:20px;
+   margin:5px;
+   cursor:pointer;
+   _border:1px solid black;
+}
+.h_nav {
+   width:100%;
+   height:100%;
+}
+
+.h_box {
+   position:absolute;
+   width: 5px;
+   height:5px; 
+   background-color:#000;
+   transition:0.5s;	
+}
+
+/*------작은 네모들 위치 초기값 ------*/
+.h_left_top {left:0;}
+.h_right_top { right:0 }
+.h_left_bottom {bottom:0; left:0; }
+.h_right_bottom { bottom:0; right:0; }
+
+
+/*------------------ .h_menu(S) ------------------*/
+.h_menu {
+   _display:none;
+   position:absolute;
+   width:200px;
+   height:100vh;
+   background:#ff6622;
+   top:-5px;
+   right:-210px;
+   z-index:-1;
+   transition:.3s;  
+}
+.h_menu ul {
+   margin-top:50px;
+}
+.h_menu ul li {
+   padding : 20px 0 15px 30px;
+   text-align:justipy;
+   font-size : 20px; 
+   text-shadow: 2px 2px 2px black;
+   font-weight : bold; 
+   transition:.2s;
+   font-family: 'Alfa Slab One', cursive;
+   letter-spacing: 1px;
+}
+.h_menu ul li a {  color:#fff; }
+.h_menu ul li:hover {list-style: disc;}
+.h_menu ul li a:hover {
+   color:black; 
+   text-shadow: 2px 2px 0px white;
+   padding-left:15px;
+   transition:.3s;
+   list-style:nomal;
+}
+
+/*------ 네모 메뉴 클릭시 메뉴나왔다 사라짐(addClass) ------*/
+.hide{ right:-5px; transition:.3s; }
+
+/*------------------ container(S) ------------------*/
+.container {
+width:100%;
+height:100vh;
+background:rgba(0,0,0,.6);
+}
+   
+</style>
+<body>
+<header>
+<!-- 네모 메뉴 -->
+<div class="H_box">
+  <div class="h_nav">
+    <div class="h_box h_left_top"></div>
+    <div class="h_box h_right_top"></div>
+    <div class="h_box h_left_bottom"></div>
+    <div class="h_box h_right_bottom"></div>
+  </div>
+  <div class="h_menu">
+      <ul>
+        <li><a href="#">KIMWOORY</a></li>
+        <li><a href="#">LEEEUNSA</a></li>
+        <li><a href="#">MOON</a></li>
+        <li><a href="#">ITE</a></li>
+      </ul>
+  </div>
+</div>
+<!-- 메뉴 -->
+<div class="menu">
+  <ul>
+        <li><a href="#">MAIN</a></li>
+        <li><a href="#">PRODUCT</a></li>
+        <li><a href="#">ABOUT</a></li>
+  </ul>
+</div>
+</header>
+
+<div class="container"></div>
+<footer></footer>
+</body>
+<script>
+/*
+주석처리
+*/
+//주석처리
+	$(function() {
+		$(".menu").on("mouseenter", function(e){
+    			$(this).css('left', '-120px');         
+		});
+		$(".menu").on("click", function(e){
+    			$(this).css('left', '0px');         
+		});
+		$(".menu").on("mouseleave", function(e){
+    			$(this).css('left', '-130px');         
+		});
+		
+		$(".h_nav").on("click", function(e){
+    			$(".h_left_top").css({left : '5px' ,top:'5px'});
+			$(".h_right_top").css({right : '5px' ,top:'5px'}); 
+			$(".h_left_bottom").css({left : '5px' ,bottom:'5px'}); 
+			$(".h_right_bottom").css({right : '5px' ,bottom:'5px'});
+			 $(".h_menu").addClass("hide");
+ 
+		});
+		$(".h_menu").on("mouseleave", function(e){
+    			$(".h_left_top").css({left : '0px' ,top:'0px'});
+			$(".h_right_top").css({right : '0px' ,top:'0px'}); 
+			$(".h_left_bottom").css({left : '0px' ,bottom:'0px'}); 
+			$(".h_right_bottom").css({right : '0px' ,bottom:'0px'});
+			$(".h_menu").removeClass("hide");     
+		});
+	
+	});
+
+
+//이건 온 클릭 이벤트 
+//<button onclick="myFunction()">Click Me!</button>
+
+//<script>
+//function myFunction() {
+//  var x = document.getElementById("demo");
+//  x.style.fontSize = "25px";
+//  x.style.color = "red";
+//}
+//</script>
+
+</script>
+</html>
