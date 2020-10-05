@@ -6,6 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!-- jquery를 불러옵니다. jquery.com download 페이지를 참조해주세요 -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+ <!--폰트어썸 CDN 링크 -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" rel="stylesheet">
 <!-- 구글폰트주소 -->
 <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
 <title>window left menu test</title>
@@ -17,13 +19,40 @@
 a { text-decoration:none;}
 ul,ol,li {list-style:none;}
 
-/*------------------ header(S) ------------------*/
+/*------------------ header------------------*/
 header { 
    position:fixed; 
    z-index:9999;
 }
+/*------------------ loading  ------------------*/
+.loading{
+    width:100%;
+    height:100%;
+    position:fixed;
+    left:0px;
+    top:0px;
+    background:#fff;
+    z-index:1000; /* 이 값으로 레이어의 위치를 조정합니다. */
+}
 
-/*------------------ .menu(S) ------------------*/
+.hand { 
+    color:black;
+    text-shadow: 2px 2px 2px gray;
+    margin-top:20%;
+    display:block;
+    text-align:center;
+    font-size: 5em;
+    animation: loding 2.5s linear infinite;
+    transform-origin: 50% 50%;    /* 회전의 중심 위치: 정중앙에 회전*/
+}
+
+@keyframes loding {
+    100% {
+    	transform: rotate(360deg);
+    }
+}
+
+/*------------------ .menu ------------------*/
 .menu {
    position:relative;
    top:100px;
@@ -87,7 +116,7 @@ header {
    transition:.3s;
 }
 
-/*------------------ .H_box(S) ------------------*/
+/*------------------ .H_box------------------*/
 .H_box {
    position:fixed;
    right:0;
@@ -117,7 +146,7 @@ header {
 .h_right_bottom { bottom:0; right:0; }
 
 
-/*------------------ .h_menu(S) ------------------*/
+/*------------------ .h_menu ------------------*/
 .h_menu {
    _display:none;
    position:absolute;
@@ -157,7 +186,7 @@ header {
 /*------ 네모 메뉴 클릭시 메뉴나왔다 사라짐(addClass) ------*/
 .hide{ right:-5px; transition:.3s; }
 
-/*------------------ container(S) ------------------*/
+/*------------------ container ------------------*/
 .container {
 width:100%;
 height:100vh;
@@ -166,12 +195,43 @@ background-repeat: no-repeat;
 background-size: cover;
 }
 
+/*------------------ layout (공통) ------------------*/ 
+.layout { 
+width:100%;
+height:100vh;
+}
+/* 숨기려는 버튼을 골라서 쓰자 */ 
+/* 전체화면 버튼 */ 
+video::-webkit-media-controls-fullscreen-button {}
+/* 일시정지, 재생 버튼 */ 
+video::-webkit-media-controls-play-button {} 
+/* 재생 슬라이드..? */ 
+video::-webkit-media-controls-timeline {} 
+/* 현재 진행 시간 */ 
+video::-webkit-media-controls-current-time-display{} 
+/* 전체 시간 */ 
+video::-webkit-media-controls-time-remaining-display {} 
+/* 음소거 버튼 */ 
+video::-webkit-media-controls-mute-button {}
+/* 볼륨 조절 슬라이드 */ 
+video::-webkit-media-controls-volume-slider {}
+/* 
+괄호에 display: none !important; 를 추가하면된다. 예 ) 전체화면 전환 버튼을 숨긴다. 
+다만 더블클릭으로 전체화면이 되는 기능등은 그대로고 단지 버튼만 없앤다. 
+*/
+video::-webkit-media-controls-fullscreen-button { display: none !important; }
 
-   
+
+.section01 { background-color : beige;}
+.section02 { background-color : yellow;}
+.section03 { background-color : beige;}
+
 </style>
 <body>
 <header>
-<!-- 네모 메뉴 -->
+<!-- loading 화면  -->
+<div class="loading"><i class="hand fas fa-american-sign-language-interpreting"></i></div>
+<!-- 오른쪽 상단 메뉴 -->
 <div class="H_box">
   <div class="h_nav">
     <div class="h_box h_left_top"></div>
@@ -188,7 +248,7 @@ background-size: cover;
       </ul>
   </div>
 </div>
-<!-- 메뉴 -->
+<!-- 왼쪽 가운데 메뉴 -->
 <div class="menu">
   <ul>
         <li><a href="#">MAIN</a></li>
@@ -198,7 +258,17 @@ background-size: cover;
 </div>
 </header>
 
-<div class="container"></div>
+<div class="container">
+<div class="layout section01">
+  <video controls autoplay width="100%" height="100%" >
+  	<source src="movie.mp4" type="video/mp4">
+  	<source src="movie.ogg" type="video/ogg">
+	Your browser does not support the video tag.
+  </video>
+</div>
+<div class="layout section02"></div>
+<div class="layout section03"></div>
+</div>
 <footer></footer>
 </body>
 <script>
@@ -206,6 +276,7 @@ background-size: cover;
 주석처리
 */
 //주석처리
+
 	$(function() {
 		$(".menu").on("mouseenter", function(e){
     			$(this).css('left', '-120px');         
@@ -234,6 +305,14 @@ background-size: cover;
 		});
 	
 	});
+
+window.onbeforeunload = function () { $('.loading').show(); } 
+ //현재 페이지에서 다른 페이지로 넘어갈 때 표시해주는 기능
+
+ //화면 로드 처리
+$(function() { 
+ $(".loading").fadeOut('slow');
+});
 
 
 //이건 온 클릭 이벤트 
