@@ -119,12 +119,14 @@ header {
 /*------------------ .H_box------------------*/
 .H_box {
    position:fixed;
-   right:0;
+   right:10px;
+   top:10px;
    width: 20px;
    height:20px;
    margin:5px;
    cursor:pointer;
    _border:1px solid black;
+   z-index:9999;
 }
 .h_nav {
    width:100%;
@@ -135,7 +137,7 @@ header {
    position:absolute;
    width: 5px;
    height:5px; 
-   background-color:#000;
+   background-color:#fff;
    transition:0.5s;	
 }
 
@@ -150,11 +152,11 @@ header {
 .h_menu {
    _display:none;
    position:absolute;
-   width:200px;
+   width:210px;
    height:100vh;
    background:#ff6622;
-   top:-5px;
-   right:-210px;
+   top:-15px;
+   right: -225px;
    z-index:-1;
    transition:.3s;  
 }
@@ -184,47 +186,53 @@ header {
 }
 
 /*------ 네모 메뉴 클릭시 메뉴나왔다 사라짐(addClass) ------*/
-.hide{ right:-5px; transition:.3s; }
+.hide{ right:-15px; transition:.3s; }
 
 /*------------------ container ------------------*/
 .container {
-width:100%;
-height:100vh;
-background-image: url( "common/img/back.png" );
-background-repeat: no-repeat;
-background-size: cover;
+   width:100%;
+   height:100vh;
 }
 
 /*------------------ layout (공통) ------------------*/ 
 .layout { 
-width:100%;
-height:100vh;
+   width:100%;
+   height:100vh;
 }
-/* 숨기려는 버튼을 골라서 쓰자 */ 
-/* 전체화면 버튼 */ 
-video::-webkit-media-controls-fullscreen-button {}
-/* 일시정지, 재생 버튼 */ 
-video::-webkit-media-controls-play-button {} 
-/* 재생 슬라이드..? */ 
-video::-webkit-media-controls-timeline {} 
-/* 현재 진행 시간 */ 
-video::-webkit-media-controls-current-time-display{} 
-/* 전체 시간 */ 
-video::-webkit-media-controls-time-remaining-display {} 
-/* 음소거 버튼 */ 
-video::-webkit-media-controls-mute-button {}
-/* 볼륨 조절 슬라이드 */ 
-video::-webkit-media-controls-volume-slider {}
-/* 
-괄호에 display: none !important; 를 추가하면된다. 예 ) 전체화면 전환 버튼을 숨긴다. 
-다만 더블클릭으로 전체화면이 되는 기능등은 그대로고 단지 버튼만 없앤다. 
-*/
-video::-webkit-media-controls-fullscreen-button { display: none !important; }
-
-
-.section01 { background-color : beige;}
-.section02 { background-color : yellow;}
+.section02 { background-color : white;}
 .section03 { background-color : beige;}
+
+/*------------ section01 ------------*/ 
+.section01 {
+   _position:fixed;
+   _z-index:-99;
+}
+
+video#video {
+   position:fixed;
+   right:0;
+   buttom:0;
+   text-align:center;
+   min-width:100%;
+   min-height:100%;
+   width:auto;
+   height:auto;
+   z-index:-100;
+}
+
+/*------------ section02 ------------*/ 
+.moon {
+  width:100%;
+}
+.m_img{
+   width:50%;
+   margin:0 auto;
+   text-align: center;
+}
+.m_img img {
+   width:100px;
+   height:100px;
+}
 
 </style>
 <body>
@@ -259,24 +267,37 @@ video::-webkit-media-controls-fullscreen-button { display: none !important; }
 </header>
 
 <div class="container">
+ <!-- section01 비디오 100% (현재 우주 영상임/ 가족 영상으로 바꾸기)-->
 <div class="layout section01">
-  <video controls autoplay width="100%" height="100%" >
-  	<source src="movie.mp4" type="video/mp4">
-  	<source src="movie.ogg" type="video/ogg">
-	Your browser does not support the video tag.
+  <video autoplay loop muted id="video">
+        <source src="common/img/video.mp4" type="video/mp4">
   </video>
 </div>
-<div class="layout section02"></div>
+
+ <!-- section02 가족사진 (현재 일러스트임/ 사진으로 빠꾸기)-->
+<div class="layout section02">
+  <div class="woory"></div>
+  <div class="eunsa"></div>
+  <div class="moon">
+        <div class="m_img">
+                <img src="common/img/moon.png" alt="달이사진">
+        </div>   
+  </div>
+  <div class="ite"></div>
+</div>
 <div class="layout section03"></div>
 </div>
 <footer></footer>
 </body>
 <script>
-/*
-주석처리
-*/
-//주석처리
 
+/*----주석처리----*/
+/*
+autoplay=1 //자동 재상(auto srart)
+showinfo=0 //상단 제목바 제거(사용중단)
+autohide=1 //콘트롤바 없애기(하단 재생)
+loop=1// 무한반복 재생
+*/
 	$(function() {
 		$(".menu").on("mouseenter", function(e){
     			$(this).css('left', '-120px');         
@@ -306,25 +327,40 @@ video::-webkit-media-controls-fullscreen-button { display: none !important; }
 	
 	});
 
-window.onbeforeunload = function () { $('.loading').show(); } 
  //현재 페이지에서 다른 페이지로 넘어갈 때 표시해주는 기능
+window.onbeforeunload = function () { $('.loading').show(); } 
 
  //화면 로드 처리
 $(function() { 
  $(".loading").fadeOut('slow');
 });
 
+$(function(){
+	$("#vid").css({ width: $(window).innerWidth() + 'px', height: $(window).innerHeight() + 'px' });
+	//if you want to keep full screen on window resize
+	$(window).resize(function(){
+		$("#vid").css({ width: $(window).innerWidth() + 'px', height: $(window).innerHeight() + 'px' });
+	});
+});
+
+
+/*##############################
+// 비디오 자동플레이
+//document.getElementById("vid").play();
+// **주의점** Muted Play중에 Muted을 없애면, 실행이 멈춥니다. 
+//document.getElementById("vid").muted = ture; // 소리 끄기
+//document.getElementById("vid").muted = false; // 소리 켜기
 
 //이건 온 클릭 이벤트 
 //<button onclick="myFunction()">Click Me!</button>
 
-//<script>
+
 //function myFunction() {
 //  var x = document.getElementById("demo");
 //  x.style.fontSize = "25px";
 //  x.style.color = "red";
 //}
-//</script>
+##############################*/
 
 </script>
 </html>
