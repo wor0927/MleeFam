@@ -15,7 +15,15 @@
 <style>
 /*------------------ 셋팅값 ------------------*/
 @import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap');
-* { padding:0; margin:0;}
+
+/* 다운받은 폰트 사용 (폴더 경로 잘 확인하기) */
+@font-face { 
+   font-family:"Charlotte"; 
+   src:url(common/font/charlotte_3/Charlotte.ttf);
+}
+
+/* 폰트 패밀리- charlotte 전체 폰트 먹이기 */
+* { padding:0; margin:0; font-family:Charlotte; }
 a { text-decoration:none;}
 ul,ol,li {list-style:none;}
 
@@ -105,7 +113,8 @@ header {
    text-shadow: 2px 2px 2px red;
    font-weight : bold; 
    transition:.3s;
-   font-family: 'Alfa Slab One', cursive;
+   /* 'Alfa Slab One', cursive 이 순으로 폰트가 먹음
+   font-family: Charlotte, 'Alfa Slab One', cursive; */
    letter-spacing:0.08;
    color:yellow;
 }
@@ -170,13 +179,14 @@ header {
    text-shadow: 2px 2px 2px black;
    font-weight : bold; 
    transition:.2s;
-   font-family: 'Alfa Slab One', cursive;
+   font-family: Charlotte, 'Alfa Slab One', cursive;
    letter-spacing: 1px;
 }
 .h_menu ul li a {  color:#fff; }
 .h_menu ul li:hover {
    list-style: disc;
 }
+
 .h_menu ul li a:hover {
    color:black; 
    text-shadow: 2px 2px 0px white;
@@ -230,8 +240,8 @@ video#video {
    text-align: center;
 }
 .m_img img {
-   width:100px;
-   height:100px;
+   width:500px;
+   height:400px;
 }
 
 </style>
@@ -267,20 +277,20 @@ video#video {
 </header>
 
 <div class="container">
- <!-- section01 비디오 100% (현재 우주 영상임/ 가족 영상으로 바꾸기)-->
+ <!-- section01 비디오 100% (보광동 달이트영상임)-->
 <div class="layout section01">
   <video autoplay loop muted id="video">
         <source src="common/img/video.mp4" type="video/mp4">
   </video>
 </div>
 
- <!-- section02 가족사진 (현재 일러스트임/ 사진으로 빠꾸기)-->
+ <!-- section02 가족사진 (현재 펠릭스 짤임 / 가족 사진으로 빠꾸기)-->
 <div class="layout section02">
   <div class="woory"></div>
   <div class="eunsa"></div>
   <div class="moon">
         <div class="m_img">
-                <img src="common/img/moon.png" alt="달이사진">
+                <img src="common/img/FLEX.gif" alt="달이사진">
         </div>   
   </div>
   <div class="ite"></div>
